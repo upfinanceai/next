@@ -11,16 +11,16 @@ return new class extends Migration {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->enum('type', ['available', 'frozen'])->nullable();
-            $table->string('description')->nullable();
             $table->string('owner_type')->nullable();
             $table->string('owner_id')->nullable();
             $table->string('currency')->nullable();
             $table->string('status')->nullable();
-            $table->decimal('balance', 18, 8)->default(0);
+            $table->decimal('balance', 28, 8)->default(0);
+            $table->decimal('frozen_balance', 28, 8)->default(0);
             $table->text('meta')->nullable();
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE accounts ADD COLUMN total_balance DECIMAL(28,8) AS (balance + frozen_balance) STORED');
     }
 
     /**

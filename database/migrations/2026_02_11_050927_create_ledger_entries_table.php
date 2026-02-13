@@ -10,12 +10,21 @@ return new class extends Migration {
     {
         Schema::create('ledger_entries', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->nullable();
             $table->string('type')->nullable();
-            $table->foreignId('transaction_id');
-            $table->foreignId('account_id');
-            $table->decimal('amount', 18, 8);
+            $table->string('sub_type')->nullable();
+            $table->string('status')->nullable();
             $table->enum('direction', ['credit', 'debit']);
+            $table->enum('balance_type', ['available', 'frozen']);
+            $table->foreignId('transaction_id')->nullable();
+            $table->foreignId('account_id')->nullable();
+            $table->string('currency')->nullable();
+            $table->decimal('amount', 18, 8)->nullable();
+            $table->decimal('balance_before', 18, 8)->nullable();
+            $table->decimal('balance_after', 18, 8)->nullable();
+            $table->decimal('frozen_before', 18, 8)->nullable();
+            $table->decimal('frozen_after', 18, 8)->nullable();
+            $table->string('remark')->nullable();
+            $table->text('meta')->nullable();
             $table->timestamps();
         });
     }

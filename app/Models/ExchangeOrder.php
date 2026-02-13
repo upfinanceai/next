@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExchangeOrder extends Model
 {
-    /** @use HasFactory<\Database\Factories\ExchangeOrderFactory> */
     use HasFactory;
+
+    protected $guarded = [];
 }

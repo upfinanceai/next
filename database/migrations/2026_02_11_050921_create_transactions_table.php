@@ -21,6 +21,14 @@ return new class extends Migration {
             $table->decimal('amount', 18, 8)->nullable();
             $table->string('external_id')->nullable();
             $table->dateTime('cleared_at')->nullable();
+
+            // exchange specific
+            $table->string('from_currency')->nullable();
+            $table->string('to_currency')->nullable();
+            $table->decimal('from_amount', 18, 8)->nullable();
+            $table->decimal('to_amount', 18, 8)->nullable();
+            $table->decimal('exchange_rate', 18, 8)->nullable();
+
             $table->text('meta')->nullable();
             $table->timestamps();
         });

@@ -2,16 +2,20 @@
 
 namespace App\Modules\Topup\Actions;
 
-use App\Models\Account;
-use App\Models\LedgerEntry;
 use App\Models\TopupOrder;
 use App\Models\Transaction;
+use App\Modules\Account\Actions\GetSystemAccount;
+use App\Modules\Account\Actions\GetUserAccount;
+use App\Modules\Ledger\Actions\CreateLedgerEntry;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class TopupFromSavo
 {
-    public static function handle($data)
+    use AsAction;
+
+    public function handle($user, $data)
     {
         $currency = $data['currency'];
         $amount   = $data['amount'];
@@ -23,6 +27,7 @@ class TopupFromSavo
             'type'     => 'topup',
             'amount'   => $amount,
             'currency' => $currency,
+            'user_id' => $user->id,
         ]);
 
         if ($transation->status === 'cleared') {
@@ -33,7 +38,7 @@ class TopupFromSavo
             'external_id' => $data['txid'],
             'provider'    => 'savo',
         ], [
-            'user_id'  => $data['user_id'],
+            'user_id' => $user->id,
             'amount'   => $amount,
             'currency' => $currency,
         ]);
@@ -48,45 +53,25 @@ class TopupFromSavo
                 ]);
                 break;
             case 'cleared':
-                $system_account      = Account::where([
-                    'owner_type' => 'system',
-                    'owner_id'   => 'cash',
-                    'currency'   => $currency,
-                    'type'       => 'available',
-                ])->firstOrFail();
-                $system_savo_account = Account::where([
-                    'owner_type' => 'system',
-                    'owner_id'   => 'savo',
-                    'currency'   => $currency,
-                    'type'       => 'available',
-                ])->firstOrFail();
-                $user_account        = Account::where([
-                    'owner_type' => 'user',
-                    'owner_id'   => $data['user_id'],
-                    'currency'   => $currency,
-                    'type'       => 'available',
-                ])->firstOrFail();
-                LedgerEntry::create([
-                    'transaction_id' => $transation->id,
-                    'account_id'     => $system_savo_account->id,
-                    'amount'         => $amount,
-                    'type'           => 'topup',
-                    'direction'      => 'credit',
-                ]);
-                LedgerEntry::create([
-                    'transaction_id' => $transation->id,
-                    'account_id'     => $user_account->id,
-                    'amount'         => $amount,
-                    'type'           => 'topup',
-                    'direction'      => 'credit',
-                ]);
-                LedgerEntry::create([
-                    'transaction_id' => $transation->id,
-                    'account_id'     => $system_account->id,
-                    'amount'         => $amount,
-                    'type'           => 'topup',
-                    'direction'      => 'debit',
-                ]);
+                $system_account      = GetSystemAccount::run('cash', $currency);
+                $system_savo_account = GetSystemAccount::run('savo', $currency);
+                $user_account        = GetUserAccount::run($user, $currency);
+                CreateLedgerEntry::run(
+                    account: $system_savo_account,
+                    amount: $amount,
+                    type: 'topup'
+                );
+                CreateLedgerEntry::run(
+                    account: $user_account,
+                    amount: $amount,
+                    type: 'topup'
+                );
+                CreateLedgerEntry::run(
+                    account: $system_account,
+                    amount: $amount,
+                    direction: 'debit',
+                    type: 'topup'
+                );
                 $transation->update([
                     'status'     => 'cleared',
                     'cleared_at' => now(),
