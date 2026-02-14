@@ -25,8 +25,8 @@ class UpdateAccountBalance
             SUM(CASE WHEN direction = 'debit' THEN amount ELSE 0 END) as debit
         ")->first();
 
-        $account->balance         = $total_available->credit - $total_available->debit;
-        $account->fronzen_balance = $total_frozen->credit - $total_frozen->debit;
+        $account->balance        = $total_available->credit - $total_available->debit;
+        $account->frozen_balance = $total_frozen->credit - $total_frozen->debit;
         $account->save();
     }
 

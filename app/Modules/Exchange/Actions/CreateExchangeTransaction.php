@@ -2,15 +2,20 @@
 
 namespace App\Modules\Exchange\Actions;
 
-use App\Models\LedgerEntry;
-use App\Models\Transaction;
-use App\Modules\Account\Actions\GetCashAccount;
-use DB;
+use App\Modules\Account\Actions\GetSystemAccount;
+use App\Modules\Account\Actions\GetUserAccount;
+use App\Modules\Ledger\Actions\ClearTransction;
+use App\Modules\Ledger\Actions\CreateLedgerEntry;
+use App\Modules\Ledger\Actions\CreateTransaction;
+use App\Modules\Ledger\Data\TransactionData;
+use Illuminate\Support\Facades\DB;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class CreateExchangeTransaction
 {
+    use AsAction;
 
-    public static function handle(
+    public function handle(
         $user,
         $from_currency,
         $to_currency,
@@ -20,36 +25,42 @@ class CreateExchangeTransaction
     )
     {
         DB::beginTransaction();
+        $transaction    = CreateTransaction::run(
+            TransactionData::from([
+                'user'          => $user,
+                'from_currency' => $from_currency,
+                'to_currency'   => $to_currency,
+                'from_amount'   => $from_amount,
+                'to_amount'     => $from_amount,
+                'exchange_rate' => $exchange_rate,
+                'type'          => 'exchange',
+            ])
+        );
+        $from_account   = GetUserAccount::run($user, $from_currency);
+        $to_account     = GetUserAccount::run($user, $to_currency);
+        $income_account = GetSystemAccount::run('income', 'USD');
 
-        $transaction = Transaction::create([
-            'type'    => 'exchange',
-            'status'  => 'cleared',
-            'user_id' => $user->id,
-            'from_currency' => $from_currency,
-            'to_currency'   => $to_currency,
-            'from_amount'   => $from_amount,
-            'to_amount'     => $to_amount,
-            'exchange_rate' => $exchange_rate,
-        ]);
-        $from_account = GetCashAccount::handle($user, $from_currency);
-        $to_account = GetCashAccount::handle($user, $to_currency);
-
-        LedgerEntry::create([
-            'type'           => 'exchange_from',
-            'account_id'     => $from_account->id,
-            'transaction_id' => $transaction->id,
-            'amount'         => $from_amount,
-            'direction'      => 'debit',
-        ]);
-
-        LedgerEntry::create([
-            'type'           => 'exchange_to',
-            'account_id'     => $to_account->id,
-            'transaction_id' => $transaction->id,
-            'amount'         => $to_amount,
-            'direction'      => 'credit',
-        ]);
-
+        CreateLedgerEntry::run(
+            account: $from_account,
+            amount: $from_amount,
+            direction: 'debit',
+            type: 'exchange_out',
+            transaction: $transaction
+        );
+        CreateLedgerEntry::run(
+            account: $to_account,
+            amount: $to_amount,
+            type: 'exchange_in',
+            transaction: $transaction
+        );
+        $income = $from_amount - $to_amount;
+        CreateLedgerEntry::run(
+            account: $income_account,
+            amount: $income,
+            type: 'exchange_income',
+            transaction: $transaction
+        );
+        ClearTransction::run($transaction, ['income' => $income]);
         DB::commit();
     }
 }

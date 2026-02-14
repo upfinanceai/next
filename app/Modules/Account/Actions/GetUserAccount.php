@@ -9,7 +9,7 @@ class GetUserAccount
 {
     use AsAction;
 
-    public function handle($user, $currency, $create = true)
+    public function handle($user, $currency, $create = true): Account
     {
         $account = Account::where([
             'owner_type' => 'user',

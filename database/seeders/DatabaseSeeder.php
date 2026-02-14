@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CardDesign;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,5 +22,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        CardDesign::create([
+            'type'      => 'physical',
+            'provider'  => 'wasabi',
+            'status'    => 'active',
+            'publisher' => 'master_card',
+        ]);
+
+        CardDesign::create([
+            'type'      => 'physical',
+            'provider'  => 'savo',
+            'status'    => 'active',
+            'publisher' => 'visa',
+        ]);
+
     }
 }

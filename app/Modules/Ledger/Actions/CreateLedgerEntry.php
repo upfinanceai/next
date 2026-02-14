@@ -3,6 +3,7 @@
 
 namespace App\Modules\Ledger\Actions;
 
+use App\Models\Account;
 use App\Models\LedgerEntry;
 use App\Modules\Account\Actions\UpdateAccountBalance;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -11,13 +12,13 @@ class CreateLedgerEntry
 {
     use AsAction;
 
-    public static function handle(
-        $account,
-        $direction,
+    public function handle(
+        Account $account,
         $amount,
+        $direction = 'credit',
         $balance_type = 'available',
-        $transaction = null,
         $type = null,
+        $transaction = null,
     ) {
         $entry = LedgerEntry::create([
             'type'           => $type,

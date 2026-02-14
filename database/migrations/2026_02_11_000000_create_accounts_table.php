@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->string('owner_type')->nullable();
             $table->string('owner_id')->nullable();
             $table->string('currency')->nullable();
+            $table->string('chain')->nullable();
             $table->string('status')->nullable();
+            $table->enum('type', ['fiat', 'crypto'])->nullable();
             $table->decimal('balance', 28, 8)->default(0);
             $table->decimal('frozen_balance', 28, 8)->default(0);
             $table->text('meta')->nullable();
