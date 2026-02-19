@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable();
             $table->foreignId('transaction_id')->nullable();
             $table->string('status')->nullable();
+            $table->enum('type', ['crypto', 'fiat'])->nullable();
             $table->string('currency')->nullable();
+            $table->string('chain')->nullable();
             $table->decimal('amount', 18, 8)->nullable();
             $table->text('meta')->nullable();
             $table->timestamps();

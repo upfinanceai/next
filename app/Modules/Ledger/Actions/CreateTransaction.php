@@ -42,5 +42,4 @@ class CreateTransaction
         return $transaction;
     }
 
-
 }

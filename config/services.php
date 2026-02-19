@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'wasabi' => [
+        'base_url' => env('WASABI_BASE_URL'),
+        'api_key' => env('WASABI_API_KEY'),
+        'wsb_public_key' => env('WASABI_PUBLIC_KEY'),
+        'merchant_private_key' => env('WASABI_MERCHANT_PRIVATE_KEY'),
+        'merchant_public_key' => env('WASABI_MERCHANT_PUBLIC_KEY'),
+    ],
+
 ];
