@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\CardDesign;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Card\Models\CardDesign;
 
 class DatabaseSeeder extends Seeder
 {

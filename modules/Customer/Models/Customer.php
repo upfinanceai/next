@@ -2,12 +2,14 @@
 
 namespace Modules\Customer\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Support\Models\HasIdPrefix;
 
 class Customer extends Authenticatable
 {
-    use HasUlids;
+    use HasIdPrefix;
+
+    public $idPrefix = 'cus_';
 
     protected $guarded = [];
 
