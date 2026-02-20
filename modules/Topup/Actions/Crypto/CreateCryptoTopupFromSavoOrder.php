@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Topup\Actions;
+namespace Modules\Topup\Actions\Crypto;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,7 @@ use Modules\Transaction\Actions\CreateTransaction;
 use Modules\Transaction\Data\TransactionData;
 use Modules\Transaction\Models\Transaction;
 
-class TopupFromSavo
+class CreateCryptoTopupFromSavoOrder
 {
     use AsAction;
 
