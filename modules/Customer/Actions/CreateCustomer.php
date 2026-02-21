@@ -19,6 +19,7 @@ class CreateCustomer
         $customer = Customer::create([
             'name'           => $data->name,
             'email'          => $data->email,
+            'status'         => 'active',
             'affiliate_code' => $data->affiliate_code,
             'password'       => bcrypt($data->password),
             'meta'           => $data->meta,

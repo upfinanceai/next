@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Support\Base;
+namespace Modules\Support\Abstracts;
 
 use Illuminate\Http\JsonResponse;
 use Modules\Customer\Models\Customer;

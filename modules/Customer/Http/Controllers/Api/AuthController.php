@@ -6,7 +6,7 @@ use Modules\Customer\Actions\CreateCustomer;
 use Modules\Customer\Data\CustomerData;
 use Modules\Customer\Http\Requests\RegisterRequest;
 use Modules\Customer\Http\Resources\CustomerResource;
-use Modules\Support\Base\ApiController;
+use Modules\Support\Abstracts\ApiController;
 
 class AuthController extends ApiController
 {

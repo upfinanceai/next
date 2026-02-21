@@ -10,11 +10,8 @@ use Modules\Card\Data\WasabiB2CCardHolderData;
 
 class WasabiCardApiClient
 {
-    const RESPONSE_CODE_SUCCESS = 200;
-
-    const KEY_ALGORITHM       = 'RSA';
-    const SIGNATURE_ALGORITHM = 'SHA256';
-    const MAX_DECRYPT_BLOCK   = 128;
+    const int RESPONSE_CODE_SUCCESS = 200;
+    const int MAX_DECRYPT_BLOCK     = 128;
 
     public static function make(): static
     {
