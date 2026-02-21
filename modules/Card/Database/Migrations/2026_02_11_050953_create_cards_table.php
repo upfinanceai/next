@@ -9,9 +9,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('card_design_id')->nullable()->index();
-            $table->string('customer_id')->nullable()->index();
+            $table->id();
+            $table->foreignId('card_design_id')->nullable()->index();
+            $table->foreignId('customer_id')->nullable()->index();
             $table->string('holder_name')->nullable();
             $table->string('otp_email')->nullable();
             $table->string('otp_mobile_prefix')->nullable();
@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('status')->nullable();
             $table->string('currency')->nullable();
             $table->string('remark')->nullable();
+            $table->string('provider')->nullable();
             $table->string('external_id')->nullable();
             $table->mediumText('meta')->nullable();
             $table->timestamps();

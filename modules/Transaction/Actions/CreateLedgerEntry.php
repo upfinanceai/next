@@ -16,7 +16,6 @@ class CreateLedgerEntry
         $amount,
         $direction = 'credit',
         $balance_type = 'available',
-        $type = null,
         $transaction = null,
     ) {
         if ($balance_type == 'available') {
@@ -26,8 +25,9 @@ class CreateLedgerEntry
             $balance_before = $account->frozen_balance ?? 0;
             $balance_after  = $balance_before + ($direction === 'credit' ? $amount : -$amount);
         }
+
         $entry = LedgerEntry::create([
-            'type'           => $type,
+            'number' => snowflake_id(),
             'direction'      => $direction === 'credit' ? 'credit' : 'debit',
             'account_id'     => $account->id,
             'currency'       => $account->currency,
@@ -39,7 +39,7 @@ class CreateLedgerEntry
             'owner_id'       => $account->owner_id,
         ]);
 
-        UpdateAccountBalance::dispatch($account);
+        UpdateAccountBalance::run($account);
 
         return $entry;
     }

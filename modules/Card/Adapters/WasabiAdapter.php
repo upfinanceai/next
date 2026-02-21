@@ -4,20 +4,28 @@ namespace Modules\Card\Adapters;
 
 use Modules\Card\Contracts\CardProvider;
 use Modules\Card\Models\Card;
+use Modules\Core\Services\WasabiCardApiClient;
 
 class WasabiAdapter implements CardProvider
 {
 
     public function createCard($data): Card
     {
-        // TODO: call wasabi api
-        return Card::create([
-            'card_design_id' => $data['card_design_id'],
-            'holder_name'    => $data['holder_name'],
-            'last_no'        => rand(1000, 9999),
-            'currency'       => 'USD',
-            'status'         => 'active',
+        /**
+         * [
+         *'holderId' => 1,
+         *'cardTypeId' => 1,
+         * 'amount' =>1
+         * ]
+         */
+        $wasabiCard = WasabiCardApiClient::make()->createCard($data);
+        $card       = Card::create([
+            'provider'    => 'wasabi',
+            'external_id' => $wasabiCard['cardNo'],
+            'currency'    => $wasabiCard['currency'],
+            'meta'        => $wasabiCard,
         ]);
+        return $card;
     }
 
     public function freezeCard($card)

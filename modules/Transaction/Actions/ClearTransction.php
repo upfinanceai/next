@@ -2,24 +2,35 @@
 
 namespace Modules\Transaction\Actions;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Transaction\Enums\TransactionStatus;
 
 class ClearTransction
 {
     use AsAction;
 
-    public function handle($transaction, $meta = [])
+    public function handle($transaction, $entries = [])
     {
-        if ($transaction->status != 'pending') {
-            throw new \Exception('Transaction is not pending');
+        if ($transaction->status->equals(TransactionStatus::cleared())) {
+            throw new Exception('Transaction already cleared');
         }
-        $transaction->status     = 'cleared';
+
+        DB::beginTransaction();
+        if (!empty($entries)) {
+            foreach ($entries as $ledger_entry) {
+                CreateLedgerEntry::run(
+                    account: $ledger_entry->account,
+                    amount: $ledger_entry->amount,
+                    balance_type: $ledger_entry->balance_type,
+                    transaction: $transaction
+                );
+            }
+        }
+        $transaction->status = TransactionStatus::cleared();
         $transaction->cleared_at = now();
-
-        if (!empty($meta)) {
-            $transaction->meta = array_merge($transaction->meta ?? [], $meta);
-        }
-
         $transaction->save();
+        DB::commit();
     }
 }

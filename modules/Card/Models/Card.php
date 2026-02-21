@@ -5,13 +5,15 @@ namespace Modules\Card\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Core\Models\BelongsToCustomer;
+use Modules\Core\Models\Metable;
 use Modules\Customer\Models\Customer;
-use Modules\Support\Models\HasIdPrefix;
 
 class Card extends Model
 {
-    use HasIdPrefix;
     use HasFactory;
+    use BelongsToCustomer;
+    use Metable;
 
     protected $guarded = [];
 

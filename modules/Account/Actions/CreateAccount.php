@@ -24,6 +24,7 @@ class CreateAccount
             'chain' => $chain,
         ], [
             'status' => 'active',
+            'number' => snowflake_id(),
         ]);
     }
 }

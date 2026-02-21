@@ -4,6 +4,7 @@ namespace Modules\Customer\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Modules\Customer\Models\Customer;
 
 class CustomerFactory extends Factory
@@ -11,17 +12,23 @@ class CustomerFactory extends Factory
 
     protected $model = Customer::class;
 
-    /**
-     * The current password being used by the factory.
-     */
     protected static ?string $password;
 
     public function definition(): array
     {
         return [
-            'name'     => fake()->name(),
-            'email'    => fake()->unique()->safeEmail(),
-            'password' => static::$password ??= Hash::make('password'),
+            'name'          => fake()->name(),
+            'status'        => 'active',
+            'number'        => Str::random(),
+            'last_name'     => fake()->lastName(),
+            'first_name'    => fake()->firstName(),
+            'mobile_prefix' => '+86',
+            'birthday'      => fake()->dateTimeBetween('-60 years', '-20 years'),
+            'mobile'        => rand(13000000000, 19999999999),
+            'gender'        => fake()->randomElement(['M', 'F']),
+            'email'         => fake()->unique()->safeEmail(),
+            'country'       => 'CN',
+            'password'      => static::$password ??= Hash::make('password'),
         ];
     }
 }

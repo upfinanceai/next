@@ -8,7 +8,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('topup_orders', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
+            $table->string('number')->unique()->index();
             $table->string('provider')->nullable();
             $table->string('external_id')->nullable();
             $table->string('customer_id')->nullable();
@@ -17,7 +18,7 @@ return new class extends Migration {
             $table->enum('type', ['crypto', 'fiat'])->nullable();
             $table->string('currency')->nullable();
             $table->string('chain')->nullable();
-            $table->decimal('amount', 18, 8)->nullable();
+            $table->decimal('amount', 28, 8)->nullable();
             $table->text('meta')->nullable();
             $table->timestamps();
         });

@@ -3,11 +3,10 @@
 namespace Modules\Card\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Support\Models\HasIdPrefix;
+use Modules\Core\Models\Metable;
 
 class CardDesign extends Model
 {
-    use HasIdPrefix;
-
+    use Metable;
     protected $guarded = [];
 }

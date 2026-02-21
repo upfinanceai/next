@@ -4,18 +4,23 @@ namespace Modules\Transaction\Data;
 
 use Modules\Account\Models\Account;
 use Modules\Customer\Models\Customer;
+use Modules\Transaction\Enums\TransactionStatus;
 use Spatie\LaravelData\Data;
 
+/**
+ * @property LedgerEntryData[] $ledger_entries
+ */
 class TransactionData extends Data
 {
+
     public function __construct(
         public ?string $type,
         public ?string $sub_type,
         public ?Customer $customer,
         public ?float $amount,
+        public ?TransactionStatus $status,
         public ?string $currency,
         public ?string $number,
-        public ?string $status,
         public ?string $external_id,
         public ?string $from_currency,
         public ?string $to_currency,
@@ -25,6 +30,10 @@ class TransactionData extends Data
         public ?float $to_amount,
         public ?float $exchange_rate,
         public ?array $meta,
+        public ?array $ledger_entries,
     ) {
+        if (empty($status)) {
+            $this->status = TransactionStatus::created();
+        }
     }
 }

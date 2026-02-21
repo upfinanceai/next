@@ -9,7 +9,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
+            $table->string('number')->unique()->index();
             $table->string('status')->nullable();
             $table->string('name')->nullable();
             $table->string('username')->nullable();

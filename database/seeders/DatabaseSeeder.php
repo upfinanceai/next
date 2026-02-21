@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Modules\Card\Models\CardDesign;
+use Modules\Customer\Models\Customer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,26 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        CardDesign::create([
-            'type'      => 'physical',
-            'provider'  => 'wasabi',
-            'status'    => 'active',
-            'publisher' => 'master_card',
-        ]);
-
-        CardDesign::create([
-            'type'      => 'physical',
-            'provider'  => 'savo',
-            'status'    => 'active',
-            'publisher' => 'visa',
-        ]);
-
+        Customer::factory()->create();
     }
 }

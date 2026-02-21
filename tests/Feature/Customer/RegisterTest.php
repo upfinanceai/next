@@ -27,7 +27,7 @@ test('can register new customer', function () {
     });
 });
 
-test('can not register with same url', function () {
+test('can not register with same email', function () {
     $customer = Customer::factory()->create();
     $this->postJson(route('api.register'), [
         'name'     => 'Test User',

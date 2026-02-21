@@ -3,13 +3,13 @@
 namespace Modules\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Support\Models\HasIdPrefix;
+use Modules\Core\Enums\BlockChains;
 
 class Account extends Model
 {
-    use HasIdPrefix;
-
-    public $idPrefix = 'acc_';
-
     protected $guarded = [];
+
+    protected $casts = [
+        'chain' => BlockChains::class . ':nullable',
+    ];
 }

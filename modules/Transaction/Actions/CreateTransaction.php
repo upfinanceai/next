@@ -2,6 +2,7 @@
 
 namespace Modules\Transaction\Actions;
 
+use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Transaction\Data\TransactionData;
 use Modules\Transaction\Models\Transaction;
@@ -15,18 +16,18 @@ class CreateTransaction
         if (!empty($data->external_id)) {
             $transaction = Transaction::where('external_id', $data->external_id)->first();
             if ($transaction) {
-                return $transaction;
+                throw new Exception('Transaction already exists');
             }
         }
 
         if (empty($data->number)) {
-            $data->number = uniqid();
+            $data->number = $this->generateNumber($data);
         }
 
         $transaction = Transaction::create([
             'external_id'   => $data->external_id,
             'number'        => $data->number,
-            'status'        => $data->status ?? 'pending',
+            'status'        => $data->status,
             'customer_id'   => $data->customer?->id,
             'type'          => $data->type,
             'sub_type'      => $data->sub_type,
@@ -39,8 +40,12 @@ class CreateTransaction
             'exchange_rate' => $data->exchange_rate,
             'meta'          => $data->meta,
         ]);
-
         return $transaction;
+    }
+
+    public function generateNumber(TransactionData $data)
+    {
+        return date('Ymd') . app('Kra8\Snowflake\Snowflake')->next();
     }
 
 }

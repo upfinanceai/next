@@ -18,7 +18,7 @@ class GetCustomerAccount
         ])->first();
 
         if (empty($account) && $create) {
-            $account = CreateAccount::run(owner_type: 'user', owner_id: $customer->id, currency: $currency);
+            $account = CreateAccount::run(owner_type: 'customer', owner_id: $customer->id, currency: $currency);
         }
 
         return $account;

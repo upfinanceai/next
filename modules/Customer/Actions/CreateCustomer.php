@@ -18,6 +18,7 @@ class CreateCustomer
         // check user exist
         $customer = Customer::create([
             'name'           => $data->name,
+            'number'         => snowflake_id(),
             'email'          => $data->email,
             'status'         => 'active',
             'affiliate_code' => $data->affiliate_code,
@@ -27,7 +28,7 @@ class CreateCustomer
         ]);
 
         CustomerCreatedEvent::dispatch($customer);
-        Mail::to($customer->email)->queue((new WelcomeMail($customer))->onQueue('email'));
+        Mail::to($customer->email)->queue(new WelcomeMail($customer)->onQueue('email'));
         return $customer;
     }
 }

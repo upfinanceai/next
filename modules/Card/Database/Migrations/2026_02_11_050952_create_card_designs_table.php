@@ -5,20 +5,18 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('card_designs', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->enum('type', ['virtual', 'physical'])->nullable();
+            $table->id();
+            $table->string('type')->nullable()->index();
             $table->string('image')->nullable();
             $table->string('publisher')->nullable();
-            $table->string('status')->nullable();
-            $table->string('currency')->nullable();
-            $table->string('provider')->nullable();
-            $table->string('external_id')->nullable();
+            $table->string('status')->nullable()->index();
+            $table->string('currency')->nullable()->index();
+            $table->string('model')->nullable()->index();
+            $table->string('provider')->nullable()->index();
+            $table->string('external_id')->nullable()->index();
             $table->mediumText('meta')->nullable();
             $table->timestamps();
             $table->softDeletes();

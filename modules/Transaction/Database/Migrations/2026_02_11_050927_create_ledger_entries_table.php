@@ -9,32 +9,22 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('ledger_entries', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('type')->nullable();
-            $table->string('sub_type')->nullable();
-            $table->string('status')->nullable();
-            $table->enum('direction', ['credit', 'debit']);
-            $table->enum('balance_type', ['available', 'frozen']);
-            $table->string('transaction_id')->nullable();
-            $table->string('account_id')->nullable();
-            $table->string('owner_id')->nullable();
-            $table->string('currency')->nullable();
-            $table->decimal('amount', 18, 8)->nullable();
-            $table->decimal('balance_before', 18, 8)->nullable();
-            $table->decimal('balance_after', 18, 8)->nullable();
-            $table->decimal('frozen_before', 18, 8)->nullable();
-            $table->decimal('frozen_after', 18, 8)->nullable();
+            $table->id();
+            $table->string('number')->unique()->index();
+            $table->enum('direction', ['credit', 'debit'])->index();
+            $table->enum('balance_type', ['available', 'frozen'])->index();
+            $table->foreignId('transaction_id')->nullable()->index();
+            $table->foreignId('account_id')->nullable()->index();
+            $table->string('owner_id')->nullable()->index();
+            $table->string('currency')->nullable()->index();
+            $table->decimal('amount', 28, 8)->default(0);
+            $table->decimal('balance_before', 28, 8)->default(0);
+            $table->decimal('balance_after', 28, 8)->default(0);
+            $table->decimal('frozen_before', 28, 8)->default(0);
+            $table->decimal('frozen_after', 28, 8)->default(0);
             $table->string('remark')->nullable();
             $table->text('meta')->nullable();
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('ledger_entries');
     }
 };
