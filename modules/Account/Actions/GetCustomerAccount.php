@@ -3,6 +3,8 @@
 namespace Modules\Account\Actions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Account\Data\AccountData;
+use Modules\Account\Enums\AccountCategory;
 use Modules\Account\Models\Account;
 
 class GetCustomerAccount
@@ -11,16 +13,11 @@ class GetCustomerAccount
 
     public function handle($customer, $currency, $create = true): Account
     {
-        $account = Account::where([
+        return GetAccount::run(AccountData::from([
             'owner_type' => 'customer',
-            'owner_id'   => $customer->id,
-            'currency'   => $currency,
-        ])->first();
-
-        if (empty($account) && $create) {
-            $account = CreateAccount::run(owner_type: 'customer', owner_id: $customer->id, currency: $currency);
-        }
-
-        return $account;
+            'owner_id' => $customer->id,
+            'currency' => $currency,
+            'category' => AccountCategory::LIABILITY(),
+        ]), $create);
     }
 }

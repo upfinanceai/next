@@ -2,14 +2,20 @@
 
 namespace Modules\Customer;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Modules\Customer\Models\Customer;
 
-class UserServiceProvider extends ServiceProvider
+class CustomerServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
         $this->app->register(AdminServiceProvider::class);
+
+        Relation::enforceMorphMap([
+            'customer' => Customer::class,
+        ]);
     }
 
     public function boot()

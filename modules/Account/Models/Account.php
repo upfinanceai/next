@@ -3,6 +3,9 @@
 namespace Modules\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Modules\Account\Enums\AccountCategory;
+use Modules\Account\Enums\AccountStatus;
 use Modules\Core\Enums\BlockChains;
 
 class Account extends Model
@@ -10,6 +13,13 @@ class Account extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'chain' => BlockChains::class . ':nullable',
+        'chain'    => BlockChains::class . ':nullable',
+        'category' => AccountCategory::class,
+        'status'   => AccountStatus::class,
     ];
+
+    public function owner(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }

@@ -3,6 +3,7 @@
 
 namespace Modules\Card\Actions\Wasabi;
 
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Card\Models\Card;
 use Modules\Core\Services\WasabiCardApiClient;
@@ -18,11 +19,12 @@ class UpdateCardInfo
             'onlySimpleInfo' => false,
         ]);
         $status_map = [
-            'Normal'  => 'active',
-            'Pending' => 'pending',
+            'normal'  => 'active',
+            'pending' => 'pending',
         ];
+        dump($result);
         $card->update([
-            'status' => $status_map[$result['status']] ?? 'unkown',
+            'status' => $status_map[Str::lower($result['status'])] ?? 'unkown',
         ]);
     }
 }

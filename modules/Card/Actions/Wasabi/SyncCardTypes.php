@@ -5,7 +5,7 @@ namespace Modules\Card\Actions\Wasabi;
 
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Modules\Card\Models\CardDesign;
+use Modules\Card\Models\CardType;
 use Modules\Core\Services\WasabiCardApiClient;
 
 class SyncCardTypes
@@ -16,7 +16,7 @@ class SyncCardTypes
     {
         $cardTypes = WasabiCardApiClient::make()->getCardTypes();
         foreach ($cardTypes as $cardType) {
-            CardDesign::updateOrCreate([
+            CardType::updateOrCreate([
                 'provider'    => 'wasabi',
                 'external_id' => $cardType['cardTypeId'],
             ], [

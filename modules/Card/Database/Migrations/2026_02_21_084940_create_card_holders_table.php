@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('wasabi_card_holders', function (Blueprint $table) {
+        Schema::create('card_holders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable()->index();
-            $table->string('card_holder_id')->nullable();
-            $table->string('card_type_id')->nullable();
+            $table->foreignId('card_type_id')->nullable();
             $table->string('model')->nullable();
             $table->string('status')->nullable();
             $table->string('email')->nullable();
@@ -24,6 +23,9 @@ return new class extends Migration {
             $table->string('id_number')->nullable();
             $table->string('id_issue_date')->nullable();
             $table->string('id_expire_date')->nullable();
+            $table->string('provider')->nullable();
+            $table->string('external_id')->nullable();
+            $table->string('external_card_type_id')->nullable();
             $table->text('request')->nullable();
             $table->text('payload')->nullable();
             $table->text('meta')->nullable();

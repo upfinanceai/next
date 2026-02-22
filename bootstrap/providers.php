@@ -5,13 +5,13 @@ use Modules\Admin\AdminServiceProvider;
 use Modules\Affiliate\AffiliateServiceProvider;
 use Modules\Card\CardServiceProvider;
 use Modules\Core\CoreServiceProvider;
-use Modules\Customer\UserServiceProvider;
+use Modules\Customer\CustomerServiceProvider;
 use Modules\Topup\TopupServiceProvider;
 use Modules\Transaction\TransactionServiceProvider;
 
 return [
     CoreServiceProvider::class,
-    UserServiceProvider::class,
+    CustomerServiceProvider::class,
     AccountServiceProvider::class,
     TransactionServiceProvider::class,
     TopupServiceProvider::class,

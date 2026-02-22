@@ -92,6 +92,11 @@ class WasabiCardApiClient
         ]);
     }
 
+    public function depositCard($param)
+    {
+        return $this->post('/merchant/core/mcb/card/deposit', $param);
+    }
+
     public function uploadFile(string $filePath, string $category = 'globalTransfer'): array
     {
         $signature = $this->generateSignature();

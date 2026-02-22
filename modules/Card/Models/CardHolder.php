@@ -5,7 +5,7 @@ namespace Modules\Card\Models;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Models\BelongsToCustomer;
 
-class WasabiCardHolder extends Model
+class CardHolder extends Model
 {
     use BelongsToCustomer;
 

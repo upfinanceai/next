@@ -6,11 +6,13 @@ use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Account\Actions\GetCustomerAccount;
 use Modules\Account\Actions\GetSystemAccount;
+use Modules\Account\Enums\AccountBalanceType;
 use Modules\Topup\Models\TopupOrder;
 use Modules\Transaction\Actions\ClearTransction;
 use Modules\Transaction\Actions\CreateTransaction;
 use Modules\Transaction\Data\LedgerEntryData;
 use Modules\Transaction\Data\TransactionData;
+use Modules\Transaction\Enums\LedgerEntryDirection;
 use Modules\Transaction\Models\Transaction;
 
 class CreateCryptoTopupFromSavo
@@ -71,10 +73,14 @@ class CreateCryptoTopupFromSavo
                 ClearTransction::run($transation, [
                     LedgerEntryData::from([
                         "account" => $system_savo_account,
+                        "balance_type" => AccountBalanceType::AVAILABLE(),
+                        "direction"    => LedgerEntryDirection::DEBIT(),
                         "amount"  => $amount,
                     ]),
                     LedgerEntryData::from([
                         "account" => $customer_account,
+                        "balance_type" => AccountBalanceType::AVAILABLE(),
+                        "direction"    => LedgerEntryDirection::CREDIT(),
                         "amount"  => $amount,
                     ]),
                 ]);

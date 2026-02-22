@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('card_designs', function (Blueprint $table) {
+        Schema::create('card_types', function (Blueprint $table) {
             $table->id();
             $table->string('type')->nullable()->index();
             $table->string('image')->nullable();
+            $table->string('bin')->nullable();
             $table->string('publisher')->nullable();
             $table->string('status')->nullable()->index();
             $table->string('currency')->nullable()->index();

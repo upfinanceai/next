@@ -24,7 +24,7 @@ class CustomerFactory extends Factory
             'first_name'    => fake()->firstName(),
             'mobile_prefix' => '+86',
             'birthday'      => fake()->dateTimeBetween('-60 years', '-20 years'),
-            'mobile'        => rand(13000000000, 19999999999),
+            'mobile'        => rand(13000000000, 13999999999),
             'gender'        => fake()->randomElement(['M', 'F']),
             'email'         => fake()->unique()->safeEmail(),
             'country'       => 'CN',

@@ -17,9 +17,9 @@ class Card extends Model
 
     protected $guarded = [];
 
-    public function cardDesign(): BelongsTo
+    public function card_type(): BelongsTo
     {
-        return $this->belongsTo(CardDesign::class);
+        return $this->belongsTo(CardType::class);
     }
 
     public function customer(): BelongsTo

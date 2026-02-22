@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->string('sub_type')->nullable();
             $table->string('status')->nullable();
 
+            $table->string('description')->nullable();
+
             $table->string('customer_id')->nullable();
             $table->string('account_id')->nullable();
 
@@ -44,6 +46,7 @@ return new class extends Migration {
 
             $table->string('provider')->nullable();
             $table->string('external_id')->nullable();
+            $table->string('idempotency_key')->nullable();
 
             $table->text('merchant')->nullable();
             $table->text('fees')->nullable();

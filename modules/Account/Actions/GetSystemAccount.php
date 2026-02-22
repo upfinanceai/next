@@ -3,7 +3,8 @@
 namespace Modules\Account\Actions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
-use Modules\Account\Models\Account;
+use Modules\Account\Data\AccountData;
+use Modules\Account\Enums\AccountCategory;
 
 class GetSystemAccount
 {
@@ -11,22 +12,12 @@ class GetSystemAccount
 
     public function handle($owner_id, $currency, $chain = null, $create = true)
     {
-        $account = Account::where([
+        return GetAccount::run(AccountData::from([
             'owner_type' => 'system',
-            'owner_id'   => $owner_id,
-            'currency'   => $currency,
+            'owner_id' => $owner_id,
+            'currency' => $currency,
             'chain' => $chain,
-        ])->first();
-
-        if (empty($account) && $create) {
-            $account = CreateAccount::run(
-                owner_type: 'system',
-                owner_id: $owner_id,
-                currency: $currency,
-                chain: $chain
-            );
-        }
-
-        return $account;
+            'category' => AccountCategory::ASSET(),
+        ]), $create);
     }
 }

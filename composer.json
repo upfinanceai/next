@@ -11,8 +11,9 @@
     "singapura/merlion": "*",
       "spatie/laravel-csp": "^3.22",
     "spatie/laravel-data": "^4.19",
-    "spatie/laravel-enum": "^3.2"
-  },
+      "spatie/laravel-enum": "^3.2",
+      "ext-bcmath": "*"
+    },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",

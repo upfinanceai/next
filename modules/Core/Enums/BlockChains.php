@@ -5,6 +5,7 @@ namespace Modules\Core\Enums;
 use Spatie\Enum\Laravel\Enum;
 
 /**
+ * @method static self any()
  * @method static self eth()
  * @method static self bsc()
  * @method static self tron()

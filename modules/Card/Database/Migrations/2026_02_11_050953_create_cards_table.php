@@ -10,9 +10,9 @@ return new class extends Migration {
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('card_design_id')->nullable()->index();
+            $table->foreignId('card_type_id')->nullable()->index();
             $table->foreignId('customer_id')->nullable()->index();
-            $table->string('holder_name')->nullable();
+            $table->foreignId('card_holder_id')->nullable();
             $table->string('otp_email')->nullable();
             $table->string('otp_mobile_prefix')->nullable();
             $table->string('otp_mobile')->nullable();

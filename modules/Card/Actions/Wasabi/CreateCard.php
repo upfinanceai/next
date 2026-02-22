@@ -8,24 +8,26 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Card\Adapters\WasabiAdapter;
 use Modules\Card\Data\Wasabi\WasabiB2BCardHolderData;
 use Modules\Card\Data\Wasabi\WasabiB2CCardHolderData;
-use Modules\Card\Models\CardDesign;
-use Modules\Card\Models\WasabiCardHolder;
+use Modules\Card\Models\CardHolder;
+use Modules\Card\Models\CardType;
 use Modules\Customer\Models\Customer;
 
 class CreateCard
 {
     use AsAction;
 
-    public function handle(Customer $customer, CardDesign $cardDesign, $request = [])
+    public function handle(Customer $customer, CardType $cardType, $request = [])
     {
-        $cardHolder = WasabiCardHolder::where('card_type_id', $cardDesign->external_id)->first();
+        $cardHolder = CardHolder::where('card_type_id', $cardType->id)
+            ->where('customer_id', $customer->id)
+            ->first();
 
         if (empty($cardHolder)) {
-            if ($cardDesign->model == 'B2B') {
+            if ($cardType->model == 'B2B') {
                 $data = WasabiB2BCardHolderData::from([
                     'merchantOrderNo' => Str::random(20),
                     'birthday'        => $customer->birthday,
-                    'cardTypeId'      => $cardDesign->external_id,
+                    'cardTypeId'      => $cardType->external_id,
                     'postCode'        => $customer->post_code ?? '123456',
                     'mobile'          => $customer->mobile,
                     'email'           => $customer->email,
@@ -41,7 +43,7 @@ class CreateCard
             } else {
                 $data = WasabiB2CCardHolderData::from([]);
             }
-            $cardHolder = CreateCardHolder::run($customer, $data);
+            $cardHolder = CreateCardHolder::run($customer, $cardType, $data);
         }
 
         if (empty($cardHolder)) {
@@ -52,13 +54,14 @@ class CreateCard
 
         $card = \Modules\Card\Actions\CreateCard::run($customer, [
             'merchantOrderNo' => Str::random(20),
-            'holderId'        => $cardHolder->card_holder_id,
-            'cardTypeId'      => $cardDesign->external_id,
+            'holderId' => $cardHolder->external_id,
+            'cardTypeId'      => $cardType->external_id,
             'amount'          => $request['amount'] ?? 0,
         ], $provider);
 
         $card->update([
-            'card_design_id' => $cardDesign->id,
+            'card_type_id'   => $cardType->id,
+            'card_holder_id' => $cardHolder->id,
             'customer_id'    => $customer->id,
             'otp_email'      => $cardHolder->email,
         ]);

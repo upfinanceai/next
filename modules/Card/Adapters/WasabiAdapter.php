@@ -32,4 +32,14 @@ class WasabiAdapter implements CardProvider
     {
         // TODO: Implement freezeCard() method.
     }
+
+    public function deposit($card, $amount)
+    {
+        // TODO: Implement deposit() method.
+    }
+
+    public function withdraw($card, $amount)
+    {
+        // TODO: Implement withdraw() method.
+    }
 }

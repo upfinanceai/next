@@ -10,18 +10,39 @@ return new class extends Migration {
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('number')->index();
-            $table->string('name')->nullable();
-            $table->string('owner_type')->nullable();
-            $table->string('owner_id')->nullable();
-            $table->string('currency')->nullable();
-            $table->string('chain')->nullable();
-            $table->string('status')->nullable();
-            $table->string('type')->index();
+            $table->string('number', 32)->unique();
+
+            $table->foreignId('parent_id')->nullable()->constrained('accounts');
+
+            $table->string('name', 50)->nullable();
+            $table->string('purpose', 50)->nullable();
+
+            $table->string('status', 20);
+
+            $table->string('owner_type', 50);
+            $table->string('owner_id', 50);
+            $table->string('currency', 10);
+
+            $table->string('category', 20)->default('');
+            $table->string('chain', 20)->nullable();
+
             $table->decimal('balance', 28, 8)->default(0);
             $table->decimal('frozen_balance', 28, 8)->default(0);
-            $table->text('meta')->nullable();
+            $table->decimal('total_balance', 28, 8)->default(0);
+
+            $table->json('meta')->nullable();
             $table->timestamps();
+
+            // 唯一索引已覆盖前缀查询，删除冗余的 idx_accounts_owner
+            $table->unique(
+                ['owner_type', 'owner_id', 'currency', 'chain'],
+                'uk_accounts'
+            );
+
+            $table->index(
+                ['owner_type', 'owner_id', 'status', 'currency'],
+                'idx_accounts_owner_query'
+            );
         });
     }
 

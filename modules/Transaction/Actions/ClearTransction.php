@@ -5,6 +5,7 @@ namespace Modules\Transaction\Actions;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Transaction\Data\LedgerEntryData;
 use Modules\Transaction\Enums\TransactionStatus;
 
 class ClearTransction
@@ -21,10 +22,13 @@ class ClearTransction
         if (!empty($entries)) {
             foreach ($entries as $ledger_entry) {
                 CreateLedgerEntry::run(
-                    account: $ledger_entry->account,
-                    amount: $ledger_entry->amount,
-                    balance_type: $ledger_entry->balance_type,
-                    transaction: $transaction
+                    LedgerEntryData::from([
+                        "account"      => $ledger_entry->account,
+                        "amount"       => $ledger_entry->amount,
+                        "direction"    => $ledger_entry->direction,
+                        "balance_type" => $ledger_entry->balance_type,
+                        "transaction"  => $transaction,
+                    ])
                 );
             }
         }
