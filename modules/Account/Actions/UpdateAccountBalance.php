@@ -5,7 +5,6 @@ namespace Modules\Account\Actions;
 use DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Account\Enums\AccountBalanceType;
-use Modules\Account\Enums\AccountCategory;
 use Modules\Account\Models\Account;
 use Modules\Transaction\Models\LedgerEntry;
 
@@ -45,7 +44,7 @@ class UpdateAccountBalance
             $frozenCredit    = (string)($rows[AccountBalanceType::FROZEN()->value]->credit ?? '0');
             $frozenDebit     = (string)($rows[AccountBalanceType::FROZEN()->value]->debit ?? '0');
 
-            $isAsset = $locked->category->equals(AccountCategory::ASSET());
+            $isAsset = $locked->is_asset;
 
             // 3) Compute balances (ASSET: debit-credit, others: credit-debit)
             if ($isAsset) {

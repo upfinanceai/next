@@ -22,4 +22,9 @@ class Account extends Model
     {
         return $this->morphTo();
     }
+
+    public function getIsAssetAttribute()
+    {
+        return $this->category->equals(AccountCategory::ASSET(), AccountCategory::REVENUE());
+    }
 }
