@@ -27,6 +27,9 @@ return new class extends Migration {
             $table->decimal('balance_after', 28, 8)->default(0);
 
             $table->string('remark')->nullable();
+            $table->string('prev_hash')->nullable();
+            $table->string('hash')->nullable();
+
             $table->text('meta')->nullable();
             $table->timestamps();
         });

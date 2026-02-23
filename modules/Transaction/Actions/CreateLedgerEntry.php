@@ -12,7 +12,7 @@ class CreateLedgerEntry
 {
     use AsAction;
 
-    public function handle(LedgerEntryData $data)
+    public function handle(LedgerEntryData $data, $previousHash = "0")
     {
         $amount    = $data->amount;
         $is_credit = $data->direction->equals(LedgerEntryDirection::CREDIT());
@@ -33,9 +33,20 @@ class CreateLedgerEntry
                 : $balance_before - $amount;
         }
 
+        $creaated_at = date('Y-m-d H:i:s');
+
+        $dataToHash = $previousHash .
+            $data->account->id .
+            $data->account->currency .
+            $amount .
+            $data->direction->value .
+            $creaated_at;
+
+        $currentHash = hash('sha256', $dataToHash);
+
         $entry = LedgerEntry::create([
             'number' => snowflake_id(),
-            'direction'      => $is_credit ? 'credit' : 'debit',
+            'direction'  => $data->direction,
             'account_id'     => $data->account->id,
             'currency'       => $data->account->currency,
             'amount'         => $amount,
@@ -44,6 +55,9 @@ class CreateLedgerEntry
             'balance_before' => $balance_before,
             'balance_after'  => $balance_after,
             'owner_id'       => $data->account->owner_id,
+            'hash'       => $currentHash,
+            'prev_hash'  => $previousHash,
+            'created_at' => $creaated_at,
         ]);
 
         if ($data->balance_type->equals(AccountBalanceType::AVAILABLE())) {

@@ -5,6 +5,7 @@ namespace Modules\Transaction\Actions;
 use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Transaction\Data\TransactionData;
+use Modules\Transaction\Events\TransactionCreatedEvent;
 use Modules\Transaction\Models\Transaction;
 
 class CreateTransaction
@@ -40,6 +41,9 @@ class CreateTransaction
             'exchange_rate' => $data->exchange_rate,
             'meta'          => $data->meta,
         ]);
+
+        TransactionCreatedEvent::dispatch($transaction);
+
         return $transaction;
     }
 
@@ -47,5 +51,4 @@ class CreateTransaction
     {
         return date('Ymd') . app('Kra8\Snowflake\Snowflake')->next();
     }
-
 }
