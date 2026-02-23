@@ -11,7 +11,7 @@ class CustomerServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->register(AdminServiceProvider::class);
+//        $this->app->register(AdminServiceProvider::class);
 
         Relation::enforceMorphMap([
             'customer' => Customer::class,

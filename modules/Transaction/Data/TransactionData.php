@@ -16,11 +16,13 @@ class TransactionData extends Data
     public function __construct(
         public ?string $type,
         public ?string $sub_type,
+        public ?Account $account,
         public ?Customer $customer,
         public ?float $amount,
         public ?TransactionStatus $status,
         public ?string $currency,
         public ?string $number,
+        public ?string $provider,
         public ?string $external_id,
         public ?string $from_currency,
         public ?string $to_currency,
@@ -30,6 +32,7 @@ class TransactionData extends Data
         public ?float $to_amount,
         public ?float $exchange_rate,
         public ?array $meta,
+        public ?array $request,
         public ?array $ledger_entries,
     ) {
         if (empty($status)) {

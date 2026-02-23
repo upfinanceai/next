@@ -45,8 +45,8 @@ class CreateLedgerEntry
         $currentHash = hash('sha256', $dataToHash);
 
         $entry = LedgerEntry::create([
-            'number' => snowflake_id(),
-            'direction'  => $data->direction,
+            'number'         => snowflake_short_id(),
+            'direction'      => $data->direction,
             'account_id'     => $data->account->id,
             'currency'       => $data->account->currency,
             'amount'         => $amount,

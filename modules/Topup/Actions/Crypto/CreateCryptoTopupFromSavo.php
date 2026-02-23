@@ -42,12 +42,15 @@ class CreateCryptoTopupFromSavo
         if (empty($transation)) {
             $transation = CreateTransaction::run(
                 TransactionData::from([
-                    'type'        => 'topup',
-                    'sub_type' => 'savo_crypto',
-                    'amount'      => $amount,
-                    'currency'    => $currency,
                     'customer' => $customer,
+                    'account'  => $customer_account,
+                    'type'     => 'crypto',
+                    'sub_type' => 'deposit',
+                    'amount'   => $amount,
+                    'currency' => $currency,
+                    'provider' => 'savo',
                     'external_id' => $data['txid'],
+                    'request'  => $data,
                 ])
             );
         }

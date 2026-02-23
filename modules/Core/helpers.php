@@ -8,3 +8,10 @@ if (!function_exists('snowflake_id')) {
         return app(Snowflake::class)->next();
     }
 }
+
+if (!function_exists('snowflake_short_id')) {
+    function snowflake_short_id()
+    {
+        return app(Snowflake::class)->short();
+    }
+}

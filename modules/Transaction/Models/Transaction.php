@@ -14,6 +14,6 @@ class Transaction extends Model
 
     protected $casts = [
         'status' => TransactionStatus::class,
-        'meta' => 'array',
+        'request' => 'array',
     ];
 }

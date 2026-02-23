@@ -17,5 +17,5 @@ return [
     TopupServiceProvider::class,
     CardServiceProvider::class,
     AffiliateServiceProvider::class,
-    AdminServiceProvider::class
+//    AdminServiceProvider::class
 ];
