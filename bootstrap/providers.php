@@ -1,21 +1,13 @@
 <?php
 
-use Modules\Account\AccountServiceProvider;
-use Modules\Admin\AdminServiceProvider;
-use Modules\Affiliate\AffiliateServiceProvider;
-use Modules\Card\CardServiceProvider;
-use Modules\Core\CoreServiceProvider;
-use Modules\Customer\CustomerServiceProvider;
-use Modules\Topup\TopupServiceProvider;
-use Modules\Transaction\TransactionServiceProvider;
-
 return [
-    CoreServiceProvider::class,
-    CustomerServiceProvider::class,
-    AccountServiceProvider::class,
-    TransactionServiceProvider::class,
-    TopupServiceProvider::class,
-    CardServiceProvider::class,
-    AffiliateServiceProvider::class,
-//    AdminServiceProvider::class
+    Modules\Account\AccountServiceProvider::class,
+    Modules\Affiliate\AffiliateServiceProvider::class,
+    Modules\Card\CardServiceProvider::class,
+    Modules\Core\CoreServiceProvider::class,
+    Modules\Customer\CustomerServiceProvider::class,
+    Modules\Topup\TopupServiceProvider::class,
+    Modules\Transaction\TransactionServiceProvider::class,
+
+    App\Providers\Filament\AdminPanelProvider::class,
 ];
