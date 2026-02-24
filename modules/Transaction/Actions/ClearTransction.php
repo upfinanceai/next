@@ -20,6 +20,8 @@ class ClearTransction
             throw new Exception('Transaction already cleared');
         }
 
+        // check ledger entry balance
+
         DB::beginTransaction();
         $lastEntry = LedgerEntry::orderBy('id', 'desc')->lockForUpdate()->first();
         $previousHash = $lastEntry ? $lastEntry->hash : str_repeat('0', 64);
