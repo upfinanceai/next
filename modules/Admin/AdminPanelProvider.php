@@ -70,10 +70,7 @@ class AdminPanelProvider extends AdminProvider
                         'profile',
                         __('upfinance.admin::menus.profile')
                     )->icon('ti ti-user-scan icon')->link('/profile'),
-                    Menu::make('logs', "Logs")->icon('ti ti-files')->link('/logs'),
-                    //打开新的tab
-                    Menu::make('rabbit_hole',
-                        'Transaction(new)')->icon('ti ti-hand-grab')->link('/admin/transactions')->target('_blank'),
+                    Menu::make('logs', "Logs")->icon('ti ti-align-box-left-stretch icon')->link('/logs'),
                 ], 'user');
             });
     }

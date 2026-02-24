@@ -3,7 +3,7 @@
 namespace Modules\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Core\Models\BelongsToCustomer;
+use Modules\Core\Models\Concerns\BelongsToCustomer;
 
 class SavoAccount extends Model
 {

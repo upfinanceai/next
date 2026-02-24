@@ -3,7 +3,7 @@
 namespace Modules\Card\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Core\Models\Metable;
+use Modules\Core\Models\Concerns\Metable;
 
 class CardType extends Model
 {

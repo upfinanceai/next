@@ -4,7 +4,6 @@ namespace Modules\Customer\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Modules\Customer\Models\Customer;
 
 class CustomerFactory extends Factory
@@ -19,7 +18,7 @@ class CustomerFactory extends Factory
         return [
             'name'          => fake()->name(),
             'status'        => 'active',
-            'number'        => Str::random(),
+            'number'        => snowflake_id(),
             'last_name'     => fake()->lastName(),
             'first_name'    => fake()->firstName(),
             'mobile_prefix' => '+86',

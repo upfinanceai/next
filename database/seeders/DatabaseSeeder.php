@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Core\Database\Seeders\CurrencySeeder;
 use Modules\Customer\Models\Customer;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Customer::factory()->create();
+        $this->call(CurrencySeeder::class);
     }
 }

@@ -9,8 +9,11 @@ class CoreServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->commands([
-            Install::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
+            $this->commands([
+                Install::class,
+            ]);
+        }
     }
 }

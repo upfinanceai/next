@@ -3,7 +3,7 @@
 namespace Modules\Transaction\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Core\Models\Metable;
+use Modules\Core\Models\Concerns\Metable;
 use Modules\Transaction\Enums\TransactionStatus;
 
 class Transaction extends Model

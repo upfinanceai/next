@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Admin\AdminServiceProvider;
+
 return [
     Modules\Account\AccountServiceProvider::class,
     Modules\Affiliate\AffiliateServiceProvider::class,
@@ -9,5 +11,5 @@ return [
     Modules\Topup\TopupServiceProvider::class,
     Modules\Transaction\TransactionServiceProvider::class,
 
-    App\Providers\Filament\AdminPanelProvider::class,
+    AdminServiceProvider::class
 ];
