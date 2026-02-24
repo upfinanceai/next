@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Admin\AdminServiceProvider;
+use Modules\Api\ApiServiceProvider;
 
 return [
     Modules\Account\AccountServiceProvider::class,
@@ -11,5 +12,6 @@ return [
     Modules\Topup\TopupServiceProvider::class,
     Modules\Transaction\TransactionServiceProvider::class,
 
+    ApiServiceProvider::class,
     AdminServiceProvider::class
 ];
