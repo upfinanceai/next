@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Affiliate\Api\Http\Controllers;
+namespace Modules\Api\Http\Controllers;
 
-use Modules\Affiliate\Api\Http\Requests\RegisterRequest;
-use Modules\Affiliate\Api\Http\Resources\CustomerResource;
+use Modules\Api\Http\Requests\RegisterRequest;
+use Modules\Api\Http\Resources\CustomerResource;
 use Modules\Core\Abstracts\ApiController;
 use Modules\Customer\Actions\CreateCustomer;
 use Modules\Customer\Data\CustomerData;
