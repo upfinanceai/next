@@ -5,6 +5,7 @@ namespace Modules\Transaction\Actions;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Modules\Account\Enums\AccountBalanceType;
 use Modules\Transaction\Data\LedgerEntryData;
 use Modules\Transaction\Enums\TransactionStatus;
 use Modules\Transaction\Models\LedgerEntry;
@@ -29,7 +30,7 @@ class ClearTransction
                         "account"      => $ledger_entry->account,
                         "amount"       => $ledger_entry->amount,
                         "direction"    => $ledger_entry->direction,
-                        "balance_type" => $ledger_entry->balance_type,
+                        "balance_type" => $ledger_entry->balance_type ?? AccountBalanceType::AVAILABLE(),
                         "transaction"  => $transaction,
                     ]),
                     $previousHash

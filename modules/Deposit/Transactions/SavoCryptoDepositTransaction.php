@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Topup\Transactions;
+namespace Modules\Deposit\Transactions;
 
 use Modules\Transaction\Abstracts\BusinessTransaction;
 use Modules\Transaction\Models\Transaction;

@@ -5,5 +5,6 @@ Route::group([
     'middleware' => 'api',
     'domain'     => config('api.domain'),
 ], function () {
-    require_once __DIR__ . '/customer.php';
+    Route::group(['prefix' => 'auth', 'as' => 'auth.'], __DIR__ . '/auth.php');
+    Route::group([], __DIR__ . '/customer.php');
 });

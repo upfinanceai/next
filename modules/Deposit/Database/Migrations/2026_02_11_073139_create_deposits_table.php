@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('topup_orders', function (Blueprint $table) {
+        Schema::create('deposits', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique()->index();
             $table->string('provider')->nullable();
@@ -18,17 +18,12 @@ return new class extends Migration {
             $table->enum('type', ['crypto', 'fiat'])->nullable();
             $table->string('currency')->nullable();
             $table->string('chain')->nullable();
+            $table->string('hash')->nullable();
             $table->decimal('amount', 28, 8)->nullable();
+            $table->text('payload')->nullable();
             $table->text('meta')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('topup_orders');
-    }
 };

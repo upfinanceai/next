@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Topup\Actions\Crypto;
+namespace Modules\Deposit\Actions\Crypto;
 
 use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Account\Actions\GetCustomerAccount;
 use Modules\Account\Actions\GetSystemAccount;
 use Modules\Account\Enums\AccountBalanceType;
-use Modules\Topup\Models\TopupOrder;
+use Modules\Deposit\Models\Deposit;
 use Modules\Transaction\Actions\ClearTransction;
 use Modules\Transaction\Actions\CreateTransaction;
 use Modules\Transaction\Data\LedgerEntryData;
@@ -15,7 +15,7 @@ use Modules\Transaction\Data\TransactionData;
 use Modules\Transaction\Enums\LedgerEntryDirection;
 use Modules\Transaction\Models\Transaction;
 
-class CreateCryptoTopupFromSavo
+class CreateCryptoDepositFromSavo
 {
     use AsAction;
 
@@ -27,7 +27,7 @@ class CreateCryptoTopupFromSavo
         $system_savo_account = GetSystemAccount::run('savo', $currency);
         $customer_account = GetCustomerAccount::run($customer, $currency);
 
-        $topup = TopupOrder::firstOrCreate([
+        $deposit = Deposit::firstOrCreate([
             'external_id' => $data['txid'],
             'provider'    => 'savo',
         ], [
@@ -35,6 +35,7 @@ class CreateCryptoTopupFromSavo
             'amount'      => $amount,
             'currency'    => $currency,
             'number'      => snowflake_id(),
+            'payload' => $data,
         ]);
 
         $transation = Transaction::where('external_id', $data['txid'])->first();
@@ -59,7 +60,7 @@ class CreateCryptoTopupFromSavo
             throw new Exception('Transaction already cleared');
         }
 
-        $topup->update([
+        $deposit->update([
             'transaction_id' => $transation->id,
         ]);
 
@@ -68,7 +69,7 @@ class CreateCryptoTopupFromSavo
                 $transation->update([
                     'status' => 'pending',
                 ]);
-                $topup->update([
+                $deposit->update([
                     'status' => 'pending',
                 ]);
                 break;
@@ -87,7 +88,7 @@ class CreateCryptoTopupFromSavo
                         "amount"  => $amount,
                     ]),
                 ]);
-                $topup->update([
+                $deposit->update([
                     'status' => 'cleared',
                 ]);
                 break;
@@ -95,7 +96,7 @@ class CreateCryptoTopupFromSavo
                 $transation->update([
                     'status' => 'suspend',
                 ]);
-                $topup->update([
+                $deposit->update([
                     'status' => $data['status'],
                 ]);
         }

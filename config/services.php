@@ -43,4 +43,12 @@ return [
         'merchant_public_key' => env('WASABI_MERCHANT_PUBLIC_KEY'),
     ],
 
+    'save_openapi' => [
+        'base_url'          => env("SAVO_OPENAPI_BASE_URL"),
+        'api_key'           => env("SAVO_OPENAPI_API_KEY"),
+        'system_public_key' => env("SAVO_OPENAPI_SYSTEM_PUBLIC_KEY"),
+        'app_public_key'    => env("SAVO_OPENAPI_APP_PUBLIC_KEY"),
+        'app_private_key'   => env("SAVO_OPENAPI_APP_SECRET_KEY"),
+    ],
+
 ];

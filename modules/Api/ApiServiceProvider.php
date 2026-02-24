@@ -2,6 +2,7 @@
 
 namespace Modules\Api;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider
@@ -13,6 +14,7 @@ class ApiServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        JsonResource::withoutWrapping();
         $this->loadRoutesFrom(__DIR__ . '/Routes/api.php');
     }
 }

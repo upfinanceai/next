@@ -2,7 +2,7 @@
     "name": "upfinance/upfinance",
     "type": "project",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "ext-bcmath": "*",
         "ext-openssl": "*",
         "kra8/laravel-snowflake": "^2.4",

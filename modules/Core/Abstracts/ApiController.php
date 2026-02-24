@@ -3,6 +3,7 @@
 namespace Modules\Core\Abstracts;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Modules\Customer\Models\Customer;
 
 abstract class ApiController
@@ -19,7 +20,7 @@ abstract class ApiController
         return $this->apiResponse(data: $data, message: $message, code: $code);
     }
 
-    protected function apiResponse($data = null, ?string $message = null, int $code = 200): JsonResponse
+    protected function apiResponse($data = null, ?string $message = null, int $code = 200)
     {
         $response = array_filter(compact('message', 'data'));
         return response()->json($response, $code);

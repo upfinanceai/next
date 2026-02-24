@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Topup\Models\TopupOrder>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Deposit\Models\TopupOrder>
  */
 class TopupOrderFactory extends Factory
 {

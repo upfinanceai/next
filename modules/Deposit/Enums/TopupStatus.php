@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Topup\Enums;
+namespace Modules\Deposit\Enums;
 
 use Spatie\Enum\Laravel\Enum;
 

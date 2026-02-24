@@ -15,7 +15,6 @@ class AuthController extends ApiController
         $data = CustomerData::from($request->all());
 
         $customer = CreateCustomer::run($data);
-
-        return $this->success(data: new CustomerResource($customer));
+        return $this->success(data: CustomerResource::make($customer));
     }
 }

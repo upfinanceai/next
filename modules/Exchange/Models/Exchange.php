@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Topup\Models;
+namespace Modules\Exchange\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TopupOrder extends Model
+class Exchange extends Model
 {
     protected $guarded = [];
 }

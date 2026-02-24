@@ -4,12 +4,11 @@ use Modules\Customer\Mails\WelcomeMail;
 use Modules\Customer\Models\Customer;
 
 test('can register new customer', function () {
-
     Mail::fake();
 
     $email = fake()->safeEmail();
 
-    $this->postJson(route('api.register'), [
+    $this->postJson(route('api.auth.register'), [
         'name'     => 'Test User',
         'email'    => $email,
         'password' => 'password',
@@ -29,9 +28,11 @@ test('can register new customer', function () {
 
 test('can not register with same email', function () {
     $customer = Customer::factory()->create();
-    $this->postJson(route('api.register'), [
+    $this->postJson(route('api.auth.register'), [
         'name'     => 'Test User',
         'email'    => $customer->email,
         'password' => 'password',
     ])->assertStatus(422);
 });
+
+
