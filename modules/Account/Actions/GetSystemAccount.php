@@ -10,11 +10,18 @@ class GetSystemAccount
 {
     use AsAction;
 
-    public function handle($currency, $purpose = null, $chain = null, $create = true)
+    public function handle(
+        $currency,
+        $purpose = null,
+        $chain = null,
+        $owner_type = 'system',
+        $owner_id = 1,
+        $create = true
+    )
     {
         return GetAccount::run(AccountData::from([
-            'owner_type' => 'system',
-            'owner_id' => 1,
+            'owner_type' => $owner_type,
+            'owner_id'   => $owner_id,
             'currency' => $currency,
             'chain' => $chain,
             'purpose'  => $purpose,

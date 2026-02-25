@@ -5,6 +5,8 @@ namespace Modules\Admin;
 use Merlion\AdminProvider;
 use Merlion\Components\Layouts\Admin;
 use Merlion\Components\Menu;
+use Modules\Admin\Http\Controllers\HomeController;
+use Spatie\Csp\AddCspHeaders;
 
 class AdminPanelProvider extends AdminProvider
 {
@@ -14,7 +16,10 @@ class AdminPanelProvider extends AdminProvider
         return $admin
             ->id('admin')
             ->path('admin')
+            ->livewire(true)
+            ->home(HomeController::class)
             ->brandName("UP Finance")
+            ->middleware([AddCspHeaders::class])
             ->default()
             ->serving(function () {
                 admin()->cspNonce(app('csp-nonce'));

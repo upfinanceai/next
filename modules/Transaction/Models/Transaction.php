@@ -5,6 +5,7 @@ namespace Modules\Transaction\Models;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Models\Concerns\Metable;
 use Modules\Transaction\Enums\TransactionStatus;
+use Modules\Transaction\Enums\TransactionType;
 
 class Transaction extends Model
 {
@@ -15,5 +16,6 @@ class Transaction extends Model
     protected $casts = [
         'status' => TransactionStatus::class,
         'request' => 'array',
+        'type' => TransactionType::class,
     ];
 }

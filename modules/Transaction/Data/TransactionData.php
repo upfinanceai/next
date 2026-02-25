@@ -36,7 +36,7 @@ class TransactionData extends Data
         public ?array $ledger_entries,
     ) {
         if (empty($status)) {
-            $this->status = TransactionStatus::created();
+            $this->status = TransactionStatus::DRAFT();
         }
     }
 }
