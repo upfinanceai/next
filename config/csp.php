@@ -3,6 +3,8 @@
 // use Spatie\Csp\Directive;
 // use Spatie\Csp\Keyword;
 
+use Spatie\Csp\Directive;
+
 return [
 
     /*
@@ -18,7 +20,7 @@ return [
      * Register additional global CSP directives here.
      */
     'directives' => [
-        // [Directive::SCRIPT, [Keyword::UNSAFE_EVAL, Keyword::UNSAFE_INLINE]],
+         [Directive::IMG, ['data:']],
     ],
 
     /*

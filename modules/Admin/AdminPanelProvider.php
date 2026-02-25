@@ -15,21 +15,26 @@ class AdminPanelProvider extends AdminProvider
     {
         return $admin
             ->id('admin')
-            ->domains([
-                config('admin.domain'),
-            ])
-            ->livewire(true)
-            ->home(HomeController::class)
             ->brandName("UP Finance")
-            ->middleware([AddCspHeaders::class])
+            ->home(HomeController::class)
             ->default()
+            ->domains(config('admin.domain'))
+            ->livewire(true)
+            ->middleware([AddCspHeaders::class])
+            ->authenticatedRoutes(__DIR__ . '/Routes/admin.php')
             ->serving(function () {
                 admin()->cspNonce(app('csp-nonce'));
                 admin()->menus([
                     Menu::make(
                         'dashboard',
                         __('admin::menus.dashboard')
-                    )->icon('ti ti-chart-bar icon')->link('/')
+                    )->icon('ti ti-dashboard icon')
+                        ->content([
+                            Menu::make()->label('概览')->link("/"),
+                            Menu::make()->label('账户')->link("/dashboard/accounts"),
+                            Menu::make()->label('用户')->link("/customers"),
+                            Menu::make()->label('审批')->link("/approvals"),
+                        ])
                 ]);
                 admin()->menus([
                     Menu::make(

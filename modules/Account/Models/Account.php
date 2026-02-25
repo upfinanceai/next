@@ -4,12 +4,15 @@ namespace Modules\Account\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Account\Enums\AccountCategory;
 use Modules\Account\Enums\AccountStatus;
 use Modules\Core\Enums\BlockChains;
 
 class Account extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [];
 
     protected $casts = [

@@ -1,3 +1,5 @@
 <div>
-    @livewire(\Modules\Admin\Livewire\Counter::class)
+    <div class="mb-3">
+        @livewire(\Modules\Admin\Livewire\DashboardEdit::class)
+    </div>
 </div>

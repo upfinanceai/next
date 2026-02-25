@@ -10,8 +10,8 @@ return new class extends Migration {
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('number', 32)->unique();
 
+            $table->string('number', 32)->unique();
             $table->foreignId('parent_id')->nullable()->constrained('accounts');
 
             $table->string('name', 50)->nullable();
@@ -32,8 +32,8 @@ return new class extends Migration {
 
             $table->json('meta')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            // 唯一索引已覆盖前缀查询，删除冗余的 idx_accounts_owner
             $table->unique(
                 ['owner_type', 'owner_id', 'currency', 'chain'],
                 'uk_accounts'
@@ -45,5 +45,4 @@ return new class extends Migration {
             );
         });
     }
-
 };

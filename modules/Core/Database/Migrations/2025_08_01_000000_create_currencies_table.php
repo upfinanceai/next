@@ -9,7 +9,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('currencies', function (Blueprint $table) {
-            $table->string('id', 10)->primary();
+            $table->id();
+            $table->string('code', 10)->unique();
             $table->boolean('active')->default(true);
             $table->string('name')->nullable();
             $table->string('full_name')->nullable();
@@ -17,7 +18,7 @@ return new class extends Migration {
             $table->string('symbol')->nullable();
             $table->string('chain')->nullable();
             $table->integer('precision')->default(2);
-            $table->boolean('is_crypto')->default(false);
+            $table->string('type', 10)->default(false);
             $table->boolean('is_base')->default(false);
             $table->boolean('can_deposit')->default(false);
             $table->boolean('can_withdraw')->default(false);
