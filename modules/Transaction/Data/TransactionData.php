@@ -2,6 +2,7 @@
 
 namespace Modules\Transaction\Data;
 
+use DateTime;
 use Modules\Account\Models\Account;
 use Modules\Customer\Models\Customer;
 use Modules\Transaction\Enums\TransactionStatus;
@@ -33,6 +34,7 @@ class TransactionData extends Data
         public ?float $exchange_rate,
         public ?array $meta,
         public ?array $request,
+        public ?DateTime $request_at,
         public ?array $ledger_entries,
     ) {
         if (empty($status)) {

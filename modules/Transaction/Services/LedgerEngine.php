@@ -70,7 +70,7 @@ class LedgerEngine
         return match ($type) {
             TransactionType::USER_DEPOSIT() => [
                 [
-                    'account'   => $this->getTrustAccount($context),
+                    'account'   => $this->getSystemAccount($context),
                     'direction' => LedgerEntryDirection::DEBIT(),
                     'amount'    => $context['amount'],
                     'currency'  => $context['currency'],
@@ -86,7 +86,7 @@ class LedgerEngine
         };
     }
 
-    protected function getTrustAccount(array $context): Account
+    protected function getSystemAccount(array $context): Account
     {
         return GetSystemAccount::run(
             currency: $context['currency'],

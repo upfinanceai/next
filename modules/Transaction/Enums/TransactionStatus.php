@@ -7,6 +7,9 @@ use Spatie\Enum\Laravel\Enum;
 /**
  * @method static self DRAFT()
  * @method static self PENDING()
+ * @method static self PENDING_REVIEW()
+ * @method static self APPROVED()
+ * @method static self REJECTED()
  * @method static self POSTED()
  * @method static self SETTLING()
  * @method static self SETTLED()

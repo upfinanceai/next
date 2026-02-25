@@ -10,7 +10,7 @@ return new class extends Migration {
     {
         Schema::create('ledger_entries', function (Blueprint $table) {
             $table->id();
-            $table->string('number')->unique()->index();
+            $table->string('number')->unique();
             $table->enum('direction', ['CREDIT', 'DEBIT'])->index();
             $table->foreignId('transaction_id')->nullable()->index();
             $table->foreignId('account_id')->nullable()->index();

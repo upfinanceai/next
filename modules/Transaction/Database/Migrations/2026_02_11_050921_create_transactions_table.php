@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->string('number')->unique()->index();
+            $table->string('number')->unique();
 
             $table->string('type')->nullable();
             $table->string('sub_type')->nullable();

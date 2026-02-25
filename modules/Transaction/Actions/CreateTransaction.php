@@ -44,6 +44,7 @@ class CreateTransaction
             'to_amount'     => $data->to_amount,
             'exchange_rate' => $data->exchange_rate,
             'meta'          => $data->meta,
+            'request_at' => $data->request_at ?? now(),
             'request'    => $data->request,
         ]);
 

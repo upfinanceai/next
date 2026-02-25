@@ -7,9 +7,11 @@ return [
     Modules\Core\CoreServiceProvider::class,
     Modules\Customer\CustomerServiceProvider::class,
     Modules\Deposit\DepositServiceProvider::class,
+    Modules\Withdraw\WithdrawServiceProvider::class,
     Modules\Exchange\ExchangeServiceProvider::class,
     Modules\Transaction\TransactionServiceProvider::class,
 
+    Modules\Webhook\WebhookServiceProvider::class,
     Modules\Api\ApiServiceProvider::class,
     Modules\Admin\AdminServiceProvider::class,
 ];

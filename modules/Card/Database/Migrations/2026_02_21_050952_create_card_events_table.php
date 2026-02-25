@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('card_types', function (Blueprint $table) {
+        Schema::create('card_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('card_id')->nullable()->index();
             $table->string('type')->nullable()->index();

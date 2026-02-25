@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Card\Enum;
 
 use Spatie\Enum\Laravel\Enum;
 
 /**
  * @method static self WASABI()
+ * @method static self CREGIS()
  * @method static self SAVO()
  */
-class CardProvider extends Enum
+class WithdrawProvider extends Enum
 {
+
 }
