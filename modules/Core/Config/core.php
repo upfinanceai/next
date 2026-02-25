@@ -1,7 +1,5 @@
 <?php
 
 return [
-    'widgets' => [
-
-    ],
+    'wehbook_domain' => env('WEBHOOK_DOMAIN'),
 ];
