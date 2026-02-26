@@ -11,7 +11,6 @@ use Modules\Core\Enums\CurrencyType;
 class Currency extends Model
 {
     use HasFactory;
-
     protected $casts = [
         'type'  => CurrencyType::class,
         'chain' => BlockChains::class . ':nullable',

@@ -4,12 +4,12 @@ namespace Modules\Api\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:customers,email',
+            'email'    => 'required|email',
             'password' => 'required',
         ];
     }

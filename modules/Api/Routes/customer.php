@@ -1,5 +1,6 @@
 <?php
 
-Route::get('customers', function () {
-    return \Modules\Customer\Models\Customer::all();
-});
+use Modules\Api\Http\Controllers\CustomerController;
+
+Route::get('me', [CustomerController::class, 'getProfile'])->name('profile');
+Route::post('me', [CustomerController::class, 'updateProfile'])->name('update-profile');

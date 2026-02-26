@@ -2,8 +2,6 @@
 
 namespace Modules\Core\Abstracts;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 use Modules\Customer\Models\Customer;
 
 abstract class ApiController
@@ -29,7 +27,7 @@ abstract class ApiController
     protected function getCustomer(): Customer
     {
         if (empty($this->customer)) {
-            $this->customer = Customer::findOrFail(auth()->id());
+            $this->customer = request()->user();
         }
         return $this->customer;
     }

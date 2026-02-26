@@ -7,6 +7,7 @@
         "ext-openssl": "*",
         "kra8/laravel-snowflake": "^2.4",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.12",
         "livewire/livewire": "^4.1",
