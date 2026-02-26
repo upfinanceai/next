@@ -5,14 +5,13 @@ namespace Modules\Core\Enums;
 use Spatie\Enum\Laravel\Enum;
 
 /**
- * @method static self any()
- * @method static self eth()
- * @method static self bsc()
- * @method static self tron()
- * @method static self solana()
- * @method static self base()
- * @method static self polygon()
- * @method static self sui()
+ * @method static self ETH()
+ * @method static self BSC()
+ * @method static self TRON()
+ * @method static self SOLANA()
+ * @method static self BASE()
+ * @method static self POLYGON()
+ * @method static self SUI()
  */
 class BlockChains extends Enum
 {

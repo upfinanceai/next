@@ -15,15 +15,14 @@ return new class extends Migration {
             $table->string('customer_id')->nullable();
             $table->string('transaction_id')->nullable();
             $table->string('status')->nullable();
-            $table->enum('type', ['crypto', 'fiat'])->nullable();
             $table->string('currency')->nullable();
             $table->string('chain')->nullable();
             $table->string('hash')->nullable();
             $table->decimal('amount', 28, 8)->nullable();
-            $table->text('payload')->nullable();
+            $table->text('request_payload')->nullable();
+            $table->text('result_payload')->nullable();
             $table->text('meta')->nullable();
             $table->timestamps();
         });
     }
-
 };

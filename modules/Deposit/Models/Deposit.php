@@ -11,5 +11,8 @@ class Deposit extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['payload' => 'array'];
+    protected $casts = [
+        'request_payload' => 'array',
+        'result_payload'  => 'array',
+    ];
 }

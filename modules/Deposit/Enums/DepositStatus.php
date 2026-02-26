@@ -10,6 +10,6 @@ use Spatie\Enum\Laravel\Enum;
  * @method static self cancelled()
  * @method static self suspend()
  */
-class TopupStatus extends Enum
+class DepositStatus extends Enum
 {
 }
