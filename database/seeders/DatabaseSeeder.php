@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Customer::factory()->create();
+        Customer::factory()->create([
+            'email' => 'test@example.com',
+        ]);
         $this->call(CurrencySeeder::class);
     }
 }

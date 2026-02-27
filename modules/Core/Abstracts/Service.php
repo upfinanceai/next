@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Abstracts;
 
-class Service
+abstract class Service
 {
     public static function make(...$args): static
     {

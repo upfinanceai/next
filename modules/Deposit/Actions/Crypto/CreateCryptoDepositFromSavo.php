@@ -35,7 +35,7 @@ class CreateCryptoDepositFromSavo
             'amount'      => $amount,
             'currency'    => $currency,
             'number'      => snowflake_id(),
-            'payload' => $data,
+            'request_payload' => $data,
         ]);
 
         $transation = Transaction::where('external_id', $data['txid'])->first();

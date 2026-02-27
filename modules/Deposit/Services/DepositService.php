@@ -2,11 +2,20 @@
 
 namespace Modules\Deposit\Services;
 
+use DB;
+use Modules\Account\Actions\GetCustomerAccount;
+use Modules\Account\Actions\GetSystemAccount;
 use Modules\Core\Abstracts\Service;
 use Modules\Core\Enums\CurrencyType;
 use Modules\Core\Models\Currency;
 use Modules\Customer\Models\Customer;
 use Modules\Deposit\Enums\DepositMethods;
+use Modules\Deposit\Models\Deposit;
+use Modules\Transaction\Actions\CreateTransaction;
+use Modules\Transaction\Data\TransactionData;
+use Modules\Transaction\Enums\LedgerEntryDirection;
+use Modules\Transaction\Enums\TransactionStatus;
+use Modules\Transaction\Enums\TransactionType;
 
 class DepositService extends Service
 {
@@ -23,5 +32,81 @@ class DepositService extends Service
         }
 
         return $methods;
+    }
+
+    public function create($payload)
+    {
+        // create deposit record
+        $deposit = Deposit::firstOrCreate([
+            'provider'    => $payload['provider'],
+            'external_id' => $payload['external_id'],
+        ],
+            [
+                'status'          => 'pending',
+                'number'          => snowflake_id(),
+                'customer_id'     => $payload['customer_id'],
+                'amount'          => $payload['amount'],
+                'currency'        => $payload['currency'],
+                'request_payload' => $payload,
+            ]);
+
+        // get rules
+        // auto approve
+        $this->approve($deposit);
+    }
+
+    public function approve($deposit)
+    {
+        $deposit->update([
+            'status' => 'approved',
+        ]);
+        $this->post($deposit);
+    }
+
+    public function reject($deposit)
+    {
+        $deposit->update([
+            'status' => 'rejected',
+        ]);
+    }
+
+    public function post(Deposit $deposit)
+    {
+        DB::beginTransaction();
+        $deposit->update([
+            'status' => 'posted',
+        ]);
+        $customer         = $deposit->customer;
+        $customer_account = GetCustomerAccount::run($customer, $deposit->currency);
+
+        $trust_account = GetSystemAccount::run(
+            currency: $deposit->currency,
+            owner_id: $deposit->provider
+        );
+        $transaction   = CreateTransaction::run(
+            TransactionData::from([
+                'status'   => TransactionStatus::PENDING(),
+                'type'     => TransactionType::DEPOSIT(),
+                'sub_type' => 'CRYPTO_DEPOSIT',
+                'currency' => $deposit->currency,
+                'amount'   => $deposit->amount,
+                'account'  => $customer_account,
+            ])
+        );
+        app('transaction')->post($transaction, [
+            [
+                'direction' => LedgerEntryDirection::CREDIT(),
+                'account'   => $customer_account,
+                'amount'    => $deposit->amount,
+                'currency'  => $deposit->currency,
+            ],
+            [
+                'direction' => LedgerEntryDirection::DEBIT(),
+                'account'   => $trust_account,
+                'amount'    => $deposit->amount,
+                'currency'  => $deposit->currency,
+            ],
+        ]);
+        DB::commit();
     }
 }

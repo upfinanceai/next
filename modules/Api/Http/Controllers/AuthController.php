@@ -35,7 +35,7 @@ class AuthController extends ApiController
                 'device_id'   => $request->device_id ?? Str::random(),
                 'platform'    => $request->platform ?? 'webapp',
                 'app_version' => $request->app_version ?? '0',
-                'user_agent'  => Str::substr($request->header('user-agent') ?? '', 0, 500),
+                'user_agent'  => Str::substr($request->header('user-agent') ?? '', 0, 1000),
                 'ip'          => $request->ip(),
                 'country'     => $request->country ?? '',
             ]),

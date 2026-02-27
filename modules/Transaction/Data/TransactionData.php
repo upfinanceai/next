@@ -22,6 +22,7 @@ class TransactionData extends Data
         public ?float $amount,
         public ?TransactionStatus $status,
         public ?string $currency,
+        public ?string $chain,
         public ?string $number,
         public ?string $provider,
         public ?string $external_id,

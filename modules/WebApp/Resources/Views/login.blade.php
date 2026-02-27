@@ -2,10 +2,12 @@
 
 @section('content')
     <div>
-        <form action="">
-            <input type="text" placeholder="email">
-            <input type="password" placeholder="password">
-            <button>Login</button>
+        @include('merlion::components.errors')
+        <form action="{{route('webapp.login.submit')}}" method="post">
+            @csrf
+            <input type="text" placeholder="email" name="email">
+            <input type="password" placeholder="password" name="password">
+            <button type="submit">Login</button>
         </form>
     </div>
 @endsection
