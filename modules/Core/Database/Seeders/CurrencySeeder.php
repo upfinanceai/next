@@ -47,6 +47,18 @@ class CurrencySeeder extends Seeder
             'can_exchange_to'   => true,
         ]);
         Currency::create([
+            'code'              => 'BTC',
+            'name'              => 'Bit Coin',
+            'symbol'            => 'BTC',
+            'type'              => CurrencyType::CRYPTO(),
+            'is_base'           => false,
+            'rate'              => 20000,
+            'can_withdraw'      => true,
+            'can_deposit'       => true,
+            'can_exchange_from' => false,
+            'can_exchange_to'   => false,
+        ]);
+        Currency::create([
             'code'   => 'USDT-BEP20',
             'name'              => 'USDT BSC',
             'symbol' => 'USDT',

@@ -10,12 +10,12 @@ class QueryAccount
 {
     use AsAction;
 
-    public function handle(AccountData $q, $firstOnly = true, $create = true): Account
+    public function handle(AccountData $data, $firstOnly = true, $create = true)
     {
         $where = [];
 
-        if ($q->number) {
-            $where['number'] = $q->number;
+        if ($data->number) {
+            $where['number'] = $data->number;
             $account         = Account::firstWhere($where);
 
             if ($account) {
@@ -23,34 +23,34 @@ class QueryAccount
             }
         }
 
-        if ($q->owner_type) {
-            $where['owner_type'] = $q->owner_type;
+        if ($data->owner_type) {
+            $where['owner_type'] = $data->owner_type;
         }
 
-        if ($q->owner_id) {
-            $where['owner_id'] = $q->owner_id;
+        if ($data->owner_id) {
+            $where['owner_id'] = $data->owner_id;
         }
 
-        if ($q->currency) {
-            $where['owner_type'] = $q->currency;
+        if ($data->currency) {
+            $where['owner_type'] = $data->currency;
         }
 
-        if ($q->chain) {
-            $where['chain'] = $q->chain;
+        if ($data->chain) {
+            $where['chain'] = $data->chain;
         }
 
-        if ($q->category) {
-            $where['category'] = $q->category;
+        if ($data->category) {
+            $where['category'] = $data->category;
         }
 
-        if ($q->purpose) {
-            $where['purpose'] = $q->purpose;
+        if ($data->purpose) {
+            $where['purpose'] = $data->purpose;
         }
 
         if ($firstOnly) {
             $account = Account::where($where)->first();
             if (!$account && $create) {
-                $account = CreateAccount::run($q);
+                $account = CreateAccount::run($data);
             }
         } else {
             $account = Account::where($where)->get();

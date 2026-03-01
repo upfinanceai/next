@@ -9,10 +9,16 @@ use Modules\Core\Exceptions\LogicException;
 use Modules\Transaction\Actions\CreateLedgerEntry;
 use Modules\Transaction\Data\LedgerEntryData;
 use Modules\Transaction\Enums\LedgerEntryDirection;
+use Modules\Transaction\Models\LedgerEntry;
 use Modules\Transaction\Models\Transaction;
 
 class TransactionService extends Service
 {
+    public function getEntriesBuilder($account)
+    {
+        return LedgerEntry::where('account_id', $account->id);
+    }
+
     public function post(Transaction $transaction, array $entries = [])
     {
         return DB::transaction(function () use ($transaction, $entries) {

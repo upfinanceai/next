@@ -3,8 +3,6 @@
 namespace Modules\Deposit\Services;
 
 use DB;
-use Modules\Account\Actions\GetCustomerAccount;
-use Modules\Account\Actions\GetSystemAccount;
 use Modules\Core\Abstracts\Service;
 use Modules\Core\Enums\CurrencyType;
 use Modules\Core\Models\Currency;
@@ -77,12 +75,9 @@ class DepositService extends Service
             'status' => 'posted',
         ]);
         $customer         = $deposit->customer;
-        $customer_account = GetCustomerAccount::run($customer, $deposit->currency);
+        $customer_account = app('account')->getCustomerCashAccount($customer, $deposit->currency);
+        $trust_account = app('account')->getSystemTrustAccount(owner_id: 'savo', currency: $deposit->currency);
 
-        $trust_account = GetSystemAccount::run(
-            currency: $deposit->currency,
-            owner_id: $deposit->provider
-        );
         $transaction   = CreateTransaction::run(
             TransactionData::from([
                 'status'   => TransactionStatus::PENDING(),

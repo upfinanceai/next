@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\WebApp\Http\Middleware;
+namespace Modules\Web\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
@@ -8,6 +8,6 @@ class WebAppAuthMiddleware extends Middleware
 {
     protected function redirectTo($request)
     {
-        return route('webapp.login');
+        return route('web.login');
     }
 }

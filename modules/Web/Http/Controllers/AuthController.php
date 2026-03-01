@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\WebApp\Http\Controllers;
+namespace Modules\Web\Http\Controllers;
 
-use Modules\WebApp\Http\Requests\LoginRequest;
+use Modules\Web\Http\Requests\LoginRequest;
 
 class AuthController
 {

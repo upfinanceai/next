@@ -6,6 +6,8 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Account\Data\AccountData;
 use Modules\Account\Enums\AccountStatus;
 use Modules\Account\Models\Account;
+use Modules\Core\Exceptions\LogicException;
+use Modules\Core\Models\Currency;
 
 class CreateAccount
 {
@@ -13,6 +15,12 @@ class CreateAccount
 
     public function handle(AccountData $data): Account
     {
+        // check currency exist
+        $currency = Currency::active()->where('code', $data->currency)->first();
+        if (empty($currency)) {
+            throw new LogicException('Unsupport currency');
+        }
+
         return Account::firstOrCreate([
             'owner_type' => $data->owner_type,
             'owner_id'   => $data->owner_id,

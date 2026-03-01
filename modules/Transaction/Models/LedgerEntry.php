@@ -3,6 +3,7 @@
 namespace Modules\Transaction\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Account\Enums\AccountBalanceType;
 use Modules\Transaction\Enums\LedgerEntryDirection;
 
@@ -24,5 +25,10 @@ class LedgerEntry extends Model
             $this->direction->value .
             $this->created_at->format('Y-m-d H:i:s');
         return hash('sha256', $dataToHash);
+    }
+
+    public function transaction(): BelongsTo
+    {
+        return $this->belongsTo(Transaction::class);
     }
 }

@@ -7,6 +7,7 @@ use Modules\Account\Services\AccountService;
 use Modules\Card\Services\CardService;
 use Modules\Customer\Services\CustomerService;
 use Modules\Deposit\Services\DepositService;
+use Modules\Exchange\Services\ExchangeService;
 use Modules\Transaction\Services\TransactionService;
 
 class CoreServiceProvider extends ServiceProvider
@@ -19,6 +20,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->bind('deposit', DepositService::class);
         $this->app->bind('transaction', TransactionService::class);
         $this->app->bind('account', AccountService::class);
+        $this->app->bind('exchange', ExchangeService::class);
     }
 
     public function boot()

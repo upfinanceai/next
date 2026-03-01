@@ -11,7 +11,7 @@ return [
     Modules\Exchange\ExchangeServiceProvider::class,
     Modules\Transaction\TransactionServiceProvider::class,
 
-    Modules\WebApp\WebAppServiceProvider::class,
     Modules\Api\ApiServiceProvider::class,
+    Modules\Web\WebServiceProvider::class,
     Modules\Admin\AdminServiceProvider::class,
 ];

@@ -9,7 +9,7 @@ class GetAccounts
 {
     use AsAction;
 
-    public function handle(AccountData $data): array
+    public function handle(AccountData $data)
     {
         return QueryAccount::run($data, true, false);
     }

@@ -2,7 +2,6 @@
 
 namespace Modules\Account\Services;
 
-use Modules\Account\Actions\GetAccounts;
 use Modules\Account\Actions\QueryAccount;
 use Modules\Account\Data\AccountData;
 use Modules\Account\Enums\AccountCategory;
@@ -26,12 +25,46 @@ class AccountService extends Service
         }
     }
 
+    public function getCustomerCashAccount($customer, $currency)
+    {
+        return QueryAccount::run(
+            data: AccountData::from([
+                'owner_type' => 'customer',
+                'owner_id'   => $customer->id,
+                'purpose'    => 'cash',
+                'currency'   => $currency,
+                'category'   => AccountCategory::LIABILITY(),
+            ]),
+            firstOnly: true,
+            create: true
+        );
+    }
+
     public function getCustomerCashAccounts($customer)
     {
-        return GetAccounts::run(AccountData::from([
-            'owner_type' => 'customer',
-            'owner_id'   => $customer->id,
-            'purpose'    => 'cash',
-        ]));
+        return QueryAccount::run(
+            data: AccountData::from([
+                'owner_type' => 'customer',
+                'owner_id'   => $customer->id,
+                'purpose'    => 'cash',
+            ]),
+            firstOnly: false,
+            create: false
+        );
+    }
+
+    public function getSystemTrustAccount($owner_id, $currency)
+    {
+        return QueryAccount::run(
+            data: AccountData::from([
+                'owner_type' => 'system',
+                'owner_id'   => $owner_id,
+                'purpose'    => 'trust',
+                'currency'   => $currency,
+                'category'   => AccountCategory::ASSET(),
+            ]),
+            firstOnly: true,
+            create: true
+        );
     }
 }

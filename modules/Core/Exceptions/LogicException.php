@@ -23,9 +23,14 @@ class LogicException extends Exception
 
     public function render($request)
     {
-        return response()->json([
-            'message' => $this->getMessage(),
-            'payload' => $this->payload,
-        ], $this->getCode());
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $this->getMessage(),
+                'payload' => $this->payload,
+            ], $this->getCode());
+        }
+        if (!app()->hasDebugModeEnabled()) {
+            return $this->getMessage();
+        }
     }
 }
