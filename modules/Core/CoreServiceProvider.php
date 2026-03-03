@@ -5,6 +5,7 @@ namespace Modules\Core;
 use Illuminate\Support\ServiceProvider;
 use Modules\Account\Services\AccountService;
 use Modules\Card\Services\CardService;
+use Modules\Core\Services\FeeService;
 use Modules\Customer\Services\CustomerService;
 use Modules\Deposit\Services\DepositService;
 use Modules\Exchange\Services\ExchangeService;
@@ -21,6 +22,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->bind('transaction', TransactionService::class);
         $this->app->bind('account', AccountService::class);
         $this->app->bind('exchange', ExchangeService::class);
+        $this->app->bind('fee', FeeService::class);
     }
 
     public function boot()

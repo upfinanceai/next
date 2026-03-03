@@ -6,7 +6,7 @@ namespace Modules\Card\Actions\Wasabi;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Card\Models\Card;
-use Modules\Core\Services\WasabiCardApiClient;
+use Modules\Core\Library\WasabiCardApiClient;
 
 class UpdateCardInfo
 {

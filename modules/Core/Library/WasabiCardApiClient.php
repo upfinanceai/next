@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Services;
+namespace Modules\Core\Library;
 
 use Exception;
 use Illuminate\Support\Facades\Http;

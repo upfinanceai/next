@@ -7,7 +7,7 @@ use Modules\Card\Data\Wasabi\WasabiB2BCardHolderData;
 use Modules\Card\Data\Wasabi\WasabiB2CCardHolderData;
 use Modules\Card\Models\CardHolder;
 use Modules\Card\Models\CardType;
-use Modules\Core\Services\WasabiCardApiClient;
+use Modules\Core\Library\WasabiCardApiClient;
 
 class CreateCardHolder
 {

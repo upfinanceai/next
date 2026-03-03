@@ -4,7 +4,7 @@ namespace Modules\Card\Adapters;
 
 use Modules\Card\Contracts\CardProvider;
 use Modules\Card\Models\Card;
-use Modules\Core\Services\WasabiCardApiClient;
+use Modules\Core\Library\WasabiCardApiClient;
 
 class WasabiAdapter implements CardProvider
 {

@@ -4,7 +4,7 @@ namespace Modules\Card\Actions\Wasabi;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 use Modules\Card\Models\WasabiCardHolder;
-use Modules\Core\Services\WasabiCardApiClient;
+use Modules\Core\Library\WasabiCardApiClient;
 
 class UpdateCardHolderStatus
 {
